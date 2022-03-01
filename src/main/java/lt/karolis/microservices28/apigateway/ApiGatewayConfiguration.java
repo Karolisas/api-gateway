@@ -18,9 +18,9 @@ public class ApiGatewayConfiguration {
 
         return builder.routes()
                 .route(p -> p.path("/get")
-                .filters(f->f.addRequestHeader("MyHeader","MyUri")
-                        .addRequestParameter("MyParam","paramValue"))
-                .uri("http://httpbin.org:80"))
+                        .filters(f -> f.addRequestHeader("MyHeader", "MyUri")
+                                .addRequestParameter("MyParam", "paramValue"))
+                        .uri("http://httpbin.org:80"))
                 .build();
     }
 }
