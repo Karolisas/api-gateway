@@ -21,6 +21,19 @@ public class ApiGatewayConfiguration {
                         .filters(f -> f.addRequestHeader("MyHeader", "MyUri")
                                 .addRequestParameter("MyParam", "paramValue"))
                         .uri("http://httpbin.org:80"))
+                .route(p -> p.path("/currency-exchange/**")
+                        .uri("lb://currency-exchange"))
+                .route(p -> p.path("/currency-conversion/**")
+                        .uri("lb://currency-conversion"))
+                .route(p -> p.path("/currency-conversion-feign/**")
+                        .uri("lb://currency-conversion"))
+                .route(p -> p.path("/currency-conversion-new/**")
+                        .filters(f->f.rewritePath(
+//                                "/currency-conversion-new/",
+//                                "/currency-conversion-feign/"
+                                "/currency-conversion-new/(?<segment>.*)", // is it necessary really? doesn work
+                                "/currency-conversion-feign/${segment}"
+                        )).uri("lb://currency-conversion"))
                 .build();
     }
 }
